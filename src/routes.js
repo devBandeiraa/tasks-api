@@ -78,4 +78,23 @@ export const routes = [
       return res.writeHead(204).end()
     }
   },
+
+  // DELETE
+  {
+    method: 'DELETE',
+    path: /^\/tasks\/(?<id>[a-z0-9\-]+)$/,
+    handler: (req, res) => {
+      const { id } = req.params
+
+      const task = database.findById(id)
+
+      if (!task) {
+        return res.writeHead(404).end('Task não encontrada')
+      }
+
+      database.delete(id)
+
+      return res.writeHead(204).end()
+    }
+  },
 ]
