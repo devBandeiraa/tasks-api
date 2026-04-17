@@ -48,4 +48,34 @@ export const routes = [
         .end(JSON.stringify(tasks))
     }
   },
+
+  // UPDATE
+  {
+    method: 'PUT',
+    path: /^\/tasks\/(?<id>[a-z0-9\-]+)$/,
+    handler: async (req, res) => {
+      const { id } = req.params
+
+      const task = database.findById(id)
+
+      if (!task) {
+        return res.writeHead(404).end('Task não encontrada')
+      }
+
+      let body = ''
+      for await (const chunk of req) {
+        body += chunk
+      }
+
+      const { title, description } = JSON.parse(body)
+
+      database.update(id, {
+        title,
+        description,
+        updated_at: new Date()
+      })
+
+      return res.writeHead(204).end()
+    }
+  },
 ]
