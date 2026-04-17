@@ -35,4 +35,17 @@ export const routes = [
       return res.writeHead(201).end()
     }
   },
+
+  // LIST + FILTER
+  {
+    method: 'GET',
+    path: /^\/tasks(\?search=(?<query>.*))?$/,
+    handler: (req, res) => {
+      const tasks = database.select(req.query)
+
+      return res
+        .writeHead(200, { 'Content-Type': 'application/json' })
+        .end(JSON.stringify(tasks))
+    }
+  },
 ]
