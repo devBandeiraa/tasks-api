@@ -26,7 +26,7 @@ export class Database {
     }
 
     delete(id){
-        this.#task = this.#tasks.filter(task => task.id !== id)
+        this.#task = this.#task.filter(task => task.id !== id)
     }
 
 
